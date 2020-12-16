@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [PayPal Integrate]    Script Date: 12/15/2020 12:36:19 PM ******/
+/****** Object:  Database [PayPal Integrate]    Script Date: 12/16/2020 8:13:54 AM ******/
 CREATE DATABASE [PayPal Integrate]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,17 +80,34 @@ ALTER DATABASE [PayPal Integrate] SET QUERY_STORE = OFF
 GO
 USE [PayPal Integrate]
 GO
-/****** Object:  Table [dbo].[tbl_customerInvoice]    Script Date: 12/15/2020 12:36:19 PM ******/
+/****** Object:  Table [dbo].[tbl_customerInvoice]    Script Date: 12/16/2020 8:13:54 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[tbl_customerInvoice](
 	[idtbl_customerInvoice] [bigint] IDENTITY(1,1) NOT NULL,
-	[customerName] [nvarchar](100) NOT NULL,
+	[customerFname] [nvarchar](100) NOT NULL,
 	[customerEmail] [nvarchar](100) NOT NULL,
 	[amount] [float] NOT NULL,
 	[System Date] [datetime] NULL,
+	[customerLname] [nvarchar](100) NULL,
+	[invoicerLname] [nvarchar](100) NULL,
+	[invoicerFname] [nvarchar](100) NULL,
+	[invoicerStreet] [nvarchar](100) NULL,
+	[invoicerTown] [nvarchar](100) NULL,
+	[invoicerState] [nvarchar](100) NULL,
+	[invoicerPostCode] [nvarchar](100) NULL,
+	[invoicerCountry] [nvarchar](100) NULL,
+	[invoicerCountryCode] [nvarchar](100) NULL,
+	[invoicerPhone] [nvarchar](100) NULL,
+	[invoicerWebsite] [nvarchar](100) NULL,
+	[invoicerAdditionalInfo] [nvarchar](100) NULL,
+	[invoicerLogoUrl] [nvarchar](100) NULL,
+	[invoicerTaxId] [nvarchar](100) NULL,
+	[invoicerRefNum] [nvarchar](100) NULL,
+	[customerCountryCode] [nvarchar](100) NULL,
+	[customerPhone] [nvarchar](100) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[idtbl_customerInvoice] ASC
