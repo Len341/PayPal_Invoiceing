@@ -4,22 +4,38 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_customerInvoice">
           <Key>
             <PropertyRef Name="idtbl_customerInvoice" />
           </Key>
           <Property Name="idtbl_customerInvoice" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="customerName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="customerFname" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="customerEmail" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="amount" Type="float" Nullable="false" />
           <Property Name="System Date" Type="datetime" />
+          <Property Name="customerLname" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerLname" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerFname" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerStreet" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerTown" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerState" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerPostCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerCountry" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerCountryCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerPhone" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerWebsite" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerAdditionalInfo" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerLogoUrl" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerTaxId" Type="nvarchar" MaxLength="100" />
+          <Property Name="invoicerRefNum" Type="nvarchar" MaxLength="100" />
+          <Property Name="customerCountryCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="customerPhone" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="tbl_customerInvoice" EntityType="Self.tbl_customerInvoice" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -28,10 +44,27 @@
             <PropertyRef Name="idtbl_customerInvoice" />
           </Key>
           <Property Name="idtbl_customerInvoice" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="customerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="customerEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="amount" Type="Double" Nullable="false" />
           <Property Name="System_Date" Type="DateTime" Precision="3" />
+          <Property Name="customerFname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="customerLname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerLname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerFname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerStreet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerTown" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerState" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerPostCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerCountry" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerCountryCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerWebsite" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerAdditionalInfo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerLogoUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerTaxId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="invoicerRefNum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="customerCountryCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="customerPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="PayPal_IntegrateEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_customerInvoice" EntityType="Self.tbl_customerInvoice" />
@@ -45,8 +78,25 @@
           <EntitySetMapping Name="tbl_customerInvoice">
             <EntityTypeMapping TypeName="Model.tbl_customerInvoice">
               <MappingFragment StoreEntitySet="tbl_customerInvoice">
+                <ScalarProperty Name="customerPhone" ColumnName="customerPhone" />
+                <ScalarProperty Name="customerCountryCode" ColumnName="customerCountryCode" />
+                <ScalarProperty Name="invoicerRefNum" ColumnName="invoicerRefNum" />
+                <ScalarProperty Name="invoicerTaxId" ColumnName="invoicerTaxId" />
+                <ScalarProperty Name="invoicerLogoUrl" ColumnName="invoicerLogoUrl" />
+                <ScalarProperty Name="invoicerAdditionalInfo" ColumnName="invoicerAdditionalInfo" />
+                <ScalarProperty Name="invoicerWebsite" ColumnName="invoicerWebsite" />
+                <ScalarProperty Name="invoicerPhone" ColumnName="invoicerPhone" />
+                <ScalarProperty Name="invoicerCountryCode" ColumnName="invoicerCountryCode" />
+                <ScalarProperty Name="invoicerCountry" ColumnName="invoicerCountry" />
+                <ScalarProperty Name="invoicerPostCode" ColumnName="invoicerPostCode" />
+                <ScalarProperty Name="invoicerState" ColumnName="invoicerState" />
+                <ScalarProperty Name="invoicerTown" ColumnName="invoicerTown" />
+                <ScalarProperty Name="invoicerStreet" ColumnName="invoicerStreet" />
+                <ScalarProperty Name="invoicerFname" ColumnName="invoicerFname" />
+                <ScalarProperty Name="invoicerLname" ColumnName="invoicerLname" />
+                <ScalarProperty Name="customerLname" ColumnName="customerLname" />
+                <ScalarProperty Name="customerFname" ColumnName="customerFname" />
                 <ScalarProperty Name="idtbl_customerInvoice" ColumnName="idtbl_customerInvoice" />
-                <ScalarProperty Name="customerName" ColumnName="customerName" />
                 <ScalarProperty Name="customerEmail" ColumnName="customerEmail" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="System_Date" ColumnName="System Date" />

@@ -50,10 +50,27 @@ namespace PayPal_Invoiceing
                             {
                                 tbl_customerInvoice invoice = new tbl_customerInvoice()
                                 {
-                                    customerName = args[0],
+                                    customerFname = args[0],
                                     customerEmail = args[1],
                                     System_Date = DateTime.Now,
-                                    amount = amount
+                                    amount = amount,
+                                    customerCountryCode = args[18],
+                                    customerLname = args[1],
+                                    customerPhone = args[19],
+                                    invoicerAdditionalInfo = args[14],
+                                    invoicerCountry = args[10],
+                                    invoicerCountryCode = args[11],
+                                    invoicerFname = args[4],
+                                    invoicerLname = args[5],
+                                    invoicerLogoUrl = args[15],
+                                    invoicerPhone = args[12],
+                                    invoicerPostCode = args[9],
+                                    invoicerRefNum = args[17],
+                                    invoicerState = args[8],
+                                    invoicerStreet = args[6],
+                                    invoicerTaxId = args[16],
+                                    invoicerTown = args[7],
+                                    invoicerWebsite = args[13]
                                 };
                                 ctx.tbl_customerInvoice.Add(invoice);
                                 try
@@ -69,7 +86,7 @@ namespace PayPal_Invoiceing
 
                                         Console.WriteLine("-------------------------------");
                                         Console.WriteLine("Invoice Number: " + inv.idtbl_customerInvoice.ToString());
-                                        Console.WriteLine("Customer Name: " + inv.customerName);
+                                        Console.WriteLine("Customer Name: " + inv.customerFname);
                                         Console.WriteLine("Customer Email: " + inv.customerEmail);
                                         Console.WriteLine("Amount: " + inv.amount);
                                         Console.WriteLine("Date: " + inv.System_Date.ToString());
@@ -123,21 +140,24 @@ namespace PayPal_Invoiceing
                 Method.POST);
             createInvoiceDraft.AddHeader("Authorization", "Bearer " + accesstoken);
             createInvoiceDraft.RequestFormat = DataFormat.Json;
+
             string requestBody = LoadJson(nextInvoiceNum, args[2], args[4], args[5], args[11], args[12], 
                 args[6], args[7], args[8], args[9], args[10], args[16], args[17], args[15], args[14], args[13],
                 args[0], args[1], args[18], args[19]);
+
             createInvoiceDraft.AddParameter("application/json", requestBody, ParameterType.RequestBody);
             JObject draftInvoice = JObject.Parse(client.Execute(createInvoiceDraft).Content);
 
             //string invoicesList = client.Execute(new RestRequest("https://api.sandbox.paypal.com/v2/invoicing/invoices", 
             //    Method.GET).AddHeader("Authorization", "Bearer "+accesstoken)).Content;
 
-            var sendInvoice = new RestRequest(draftInvoice["href"] + "/send", Method.POST);
+            var sendInvoice = new RestRequest(draftInvoice["href"].ToString() + "/send", Method.POST);
             sendInvoice.RequestFormat = DataFormat.Json;
             sendInvoice.AddHeader("Content-Type", "application/json");
             sendInvoice.AddHeader("Authorization", "Bearer " + accesstoken);
 
-            Console.WriteLine(client.Execute(sendInvoice).Content);
+            string invoiceLink = JObject.Parse(client.Execute(sendInvoice).Content)["href"].ToString();
+            Console.WriteLine("Heres a link for your recipient: "+invoiceLink);
             Console.ReadKey();
         }
         public static string LoadJson(string nextinvnum, string recipientemail, string invoicerFname, 
