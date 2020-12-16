@@ -1,45 +1,45 @@
 {
   "detail": {
     "invoice_number": "#INVNUM",
-    "reference": "deal-ref",
+    "reference": "REFNUM",
     "currency_code": "USD",
     "note": "Thank you for your business.",
     "term": "No refunds after 30 days.",
     "memo": "This is a long contract",
     "payment_term": {
-      "term_type": "NET_10"
+      "term_type": "NET_9"
     }
   },
   "invoicer": {
     "name": {
-      "given_name": "David",
-      "surname": "Larusso"
+      "given_name": "INVOICERFNAME",
+      "surname": "INVOICERLNAME"
     },
     "address": {
-      "address_line_1": "1234 First Street",
-      "admin_area_2": "Anytown",
-      "admin_area_1": "CA",
-      "postal_code": "98765",
-      "country_code": "US"
+      "address_line_1": "INVOICERSTREET",
+      "admin_area_2": "INVOICERTOWN",
+      "admin_area_1": "INVOICERSTATE",
+      "postal_code": "INVOICERPOSTCODE",
+      "country_code": "INVOICERCOUNTRY"
     },
     "phones": [
       {
-        "country_code": "001",
-        "national_number": "4085551234",
+        "country_code": "INVOICERCOUNTRYCODE",
+        "national_number": "INVOICERPHONE",
         "phone_type": "MOBILE"
       }
     ],
-    "website": "www.test.com",
-    "tax_id": "",
-    "logo_url": "https://example.com/logo.png",
-    "additional_notes": "2-4"
+    "website": "INVOICERWEBSITE",
+    "tax_id": "INVOICERTAXID",
+    "logo_url": "INVOICERLOGOURL",
+    "additional_notes": "INVOICERADDITIONALINFO"
   },
   "primary_recipients": [
     {
       "billing_info": {
         "name": {
-          "given_name": "Stephanie",
-          "surname": "Meyers"
+          "given_name": "CUSTFNAME",
+          "surname": "CUSTLNAME"
         },
         "address": {
           "address_line_1": "1234 Main Street",
@@ -51,17 +51,16 @@
         "email_address": "RECIPIENTEMAIL",
         "phones": [
           {
-            "country_code": "001",
-            "national_number": "4884551234",
-            "phone_type": "HOME"
+            "country_code": "RECIPIENTCOUNTRYCODE",
+            "national_number": "RECIPIENTPHONE",
+            "phone_type": "MOBILE"
           }
-        ],
-        "additional_info_value": "add-info"
+        ]
       },
       "shipping_info": {
         "name": {
-          "given_name": "Stephanie",
-          "surname": "Meyers"
+          "given_name": "CUSTFNAME",
+          "surname": "CUSTLNAME"
         },
         "address": {
           "address_line_1": "1234 Main Street",
@@ -113,11 +112,7 @@
   ],
   "configuration": {
     "partial_payment": {
-      "allow_partial_payment": true,
-      "minimum_amount_due": {
-        "currency_code": "USD",
-        "value": "20.00"
-      }
+      "allow_partial_payment": false
     },
     "allow_tip": true,
     "tax_calculated_after_discount": true,
