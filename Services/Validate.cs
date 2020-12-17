@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PayPal_Invoiceing.Classes
+namespace PayPal_Invoiceing.Services
 {
     /// <summary>
     /// will be used to validate our program arguments before it gets sent

@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PayPal_Invoiceing.Classes
+namespace PayPal_Invoiceing.Services
 {
     static class getRequestBody
     {

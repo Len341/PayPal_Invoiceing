@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PayPal_Invoiceing.EF_Model;
-using Newtonsoft.Json;
-using RestSharp;
-using System.Threading.Tasks;
-using System.IO;
 using Newtonsoft.Json.Linq;
+using PayPal_Invoiceing.Services;
+using RestSharp;
 
 namespace PayPal_Invoiceing
 {
@@ -15,6 +9,7 @@ namespace PayPal_Invoiceing
     {
         static void Main(string[] args)
         {
+            #region args description
             //the values passed into the api call should be of correct format
             //the api does not allow for eg '+27' as a country code but '27'
             //the country should also be 2-3 digits
@@ -41,78 +36,39 @@ namespace PayPal_Invoiceing
             //args 16 = invoicerLogoUrl
             //args 17 = invoicerTaxID
             //args 18 = invoiceRefNumber
+            #endregion
 
             try
             {
-                if (Classes.Validate.CheckArgs(args))
-                {
-                    //arguments are valid
-                    float amount = 0;
-                    float.TryParse(args[3], out amount);
-
-                    using (var ctx = new PayPal_IntegrateEntities())
-                    {
-                        Customer_Invoice invoice = new Customer_Invoice()
-                        {
-                            customerFname = args[0],
-                            customerEmail = args[1],
-                            System_Date = DateTime.Now,
-                            amount = amount,
-                            customerCountryCode = args[18],
-                            customerLname = args[1],
-                            customerPhone = args[19],
-                            invoicerAdditionalInfo = args[14],
-                            invoicerCountry = args[10],
-                            invoicerCountryCode = args[11],
-                            invoicerFname = args[4],
-                            invoicerLname = args[5],
-                            invoicerLogoUrl = args[15],
-                            invoicerPhone = args[12],
-                            invoicerPostCode = args[9],
-                            invoicerRefNum = args[17],
-                            invoicerState = args[8],
-                            invoicerStreet = args[6],
-                            invoicerTaxId = args[16],
-                            invoicerTown = args[7],
-                            invoicerWebsite = args[13]
-                        };
-                        ctx.Customer_Invoices.Add(invoice);
-                        ctx.SaveChanges();
-
-                    }
-                }
-
-            var client = HTTP.Client.init();
-            var response = auth(client);
-
-            string accesstoken = GetAccessKey(response.Content);
-            string nextInvoiceNum = getNextInvoiceNumber(accesstoken, client).Replace("#","");
-            //once we have the next available invoice number, we can create a draft
-
-            var draftInvoice = createInvoiceDraft(accesstoken, args, nextInvoiceNum, client);
-            //after creation of the draft invoice, only then it can be sent
-
-            //string invoicesList = client.Execute(new RestRequest("https://api.sandbox.paypal.com/v2/invoicing/invoices", 
-            //    Method.GET).AddHeader("Authorization", "Bearer "+accesstoken)).Content;
-            //the list of invoices can be used to complete other tasks like, update, delete cancel or set reminders
-
-            string link = sendInvoice(draftInvoice, accesstoken, client);
-
-            Console.WriteLine("Heres a link for your recipient: "+link);
-            Console.ReadKey();
+                Run(args);
             }
             catch (Exception ex)
             {
-                Classes.Logger.WriteLine(ex.Message, Classes.Logger.LogLevelEnum.ERROR);
-                Console.WriteLine("Error Occured, check logs");
-                Console.ReadKey();
+                Logger.WriteLine(ex.ToString(), Logger.LogLevelEnum.ERROR);
             }
         }
-       
-        private static string GetAccessKey(string json)
+
+        private static void Run(string[] args)
         {
-            dynamic parsedJson = JsonConvert.DeserializeObject(json);
-            return parsedJson.access_token;
+            if (Validate.CheckArgs(args))
+            {
+                saveInvoiceToDB(args);
+
+                var client = HTTP.Client.init();
+
+                string accesstoken = auth(client);
+                string nextInvoiceNum = getNextInvoiceNumber(accesstoken, client).Replace("#", "");
+
+                var draftInvoice = createInvoiceDraft(accesstoken, args, nextInvoiceNum, client);
+                //after creation of the draft invoice, only then it can be sent
+
+                //deleteInvoices(client, accesstoken , id);
+
+                string link = sendInvoice(draftInvoice, accesstoken, client);
+
+                Console.WriteLine("Heres a link for your recipient: " + link);
+                Console.ReadKey();
+            }
         }
     }
 }
