@@ -12,13 +12,13 @@ namespace PayPal_Invoiceing.EF_Model
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_customerInvoice
+    public partial class Customer_Invoice
     {
         public long idtbl_customerInvoice { get; set; }
+        public string customerFname { get; set; }
         public string customerEmail { get; set; }
         public double amount { get; set; }
         public Nullable<System.DateTime> System_Date { get; set; }
-        public string customerFname { get; set; }
         public string customerLname { get; set; }
         public string invoicerLname { get; set; }
         public string invoicerFname { get; set; }

@@ -62,6 +62,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\getRequestBody.cs" />
+    <Compile Include="Classes\Logger.cs" />
+    <Compile Include="Classes\Validate.cs" />
+    <Compile Include="EF Model\Customer_Invoice.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF Model\Log.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF Model\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -76,9 +85,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="EF Model\tbl_customerInvoice.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Port\HTTP\HTTPClient.cs" />
     <Compile Include="Port\HTTP\HTTPRequests.cs" />

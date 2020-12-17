@@ -5,7 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="tbl_customerInvoice">
+        <EntityType Name="Customer Invoices">
           <Key>
             <PropertyRef Name="idtbl_customerInvoice" />
           </Key>
@@ -32,22 +32,37 @@
           <Property Name="customerCountryCode" Type="nvarchar" MaxLength="100" />
           <Property Name="customerPhone" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="255" />
+          <Property Name="Text" Type="text" />
+          <Property Name="Level" Type="int" />
+          <Property Name="System Date" Type="datetime" />
+        </EntityType>
         <EntityContainer Name="ModelStoreContainer">
-          <EntitySet Name="tbl_customerInvoice" EntityType="Self.tbl_customerInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer Invoices" EntityType="Self.Customer Invoices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="tbl_customerInvoice">
+        <EntityContainer Name="PayPal_IntegrateEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customer_Invoices" EntityType="Model.Customer_Invoice" />
+          <EntitySet Name="Logs" EntityType="Model.Log" />
+        </EntityContainer>
+        <EntityType Name="Customer_Invoice">
           <Key>
             <PropertyRef Name="idtbl_customerInvoice" />
           </Key>
           <Property Name="idtbl_customerInvoice" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="customerEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="customerFname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="customerEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="amount" Type="Double" Nullable="false" />
           <Property Name="System_Date" Type="DateTime" Precision="3" />
-          <Property Name="customerFname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="customerLname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="invoicerLname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="invoicerFname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -66,18 +81,25 @@
           <Property Name="customerCountryCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="customerPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="PayPal_IntegrateEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tbl_customerInvoice" EntityType="Self.tbl_customerInvoice" />
-        </EntityContainer>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Level" Type="Int32" />
+          <Property Name="System_Date" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="PayPal_IntegrateEntities">
-          <EntitySetMapping Name="tbl_customerInvoice">
-            <EntityTypeMapping TypeName="Model.tbl_customerInvoice">
-              <MappingFragment StoreEntitySet="tbl_customerInvoice">
+        <EntitySetMapping Name="Customer_Invoices">
+            <EntityTypeMapping TypeName="Model.Customer_Invoice">
+              <MappingFragment StoreEntitySet="Customer Invoices">
                 <ScalarProperty Name="customerPhone" ColumnName="customerPhone" />
                 <ScalarProperty Name="customerCountryCode" ColumnName="customerCountryCode" />
                 <ScalarProperty Name="invoicerRefNum" ColumnName="invoicerRefNum" />
@@ -95,11 +117,22 @@
                 <ScalarProperty Name="invoicerFname" ColumnName="invoicerFname" />
                 <ScalarProperty Name="invoicerLname" ColumnName="invoicerLname" />
                 <ScalarProperty Name="customerLname" ColumnName="customerLname" />
+                <ScalarProperty Name="System_Date" ColumnName="System Date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="customerEmail" ColumnName="customerEmail" />
                 <ScalarProperty Name="customerFname" ColumnName="customerFname" />
                 <ScalarProperty Name="idtbl_customerInvoice" ColumnName="idtbl_customerInvoice" />
-                <ScalarProperty Name="customerEmail" ColumnName="customerEmail" />
-                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="Model.Log">
+              <MappingFragment StoreEntitySet="Logs">
                 <ScalarProperty Name="System_Date" ColumnName="System Date" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

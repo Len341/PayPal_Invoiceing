@@ -25,6 +25,7 @@ namespace PayPal_Invoiceing.EF_Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tbl_customerInvoice> tbl_customerInvoice { get; set; }
+        public virtual DbSet<Customer_Invoice> Customer_Invoices { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
     }
 }
